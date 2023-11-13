@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Problem Solver</title>
+</head>
+
+<p>
+This tool solves and plots the basic consumer problem often taught in 
+undergraduate economics.
+</p>
+<p>
+You may observe the plot of indifference curves and budget constraint 
+subject to parameters you enter. 
+</p>
+<p> 
+This tool assumes the consumer has a CES utility function, parameterized as
+</p>
+<p>
+    <math>    
+        <mi>U</mi>        
+        <mo>&ApplyFunction;</mo>
+            <mrow>
+                <mo>(</mo>
+                    <mrow>
+                      <mi> x </mi>
+                      <mo> , </mo>
+                      <mi> y </mi>
+                    </mrow>
+                <mo> ) </mo>
+            </mrow>
+                <mo>=</mo>
+                    <msup>
+                        <mrow>
+                            <mo> ( </mo>
+                                <mrow>
+                                    <mi>a</mi>
+                                    <mo>&InvisibleTimes;</mo>
+                                    <msup>
+                                        <mi>x</mi>
+                                        <mi>&rho;</mi>
+                                    </msup>
+                                    <mo> + </mo>
+                                    <mo> ( </mo>
+                                        <mrow>
+                                            <mn>1</mn>
+                                            <mo> - </mo>
+                                            <mi>a</mi>
+                                        </mrow>
+                                    <mo> ) </mo>
+                                    <mo>&InvisibleTimes;</mo>
+                                    <msup>
+                                        <mi>y</mi>
+                                        <mi>&rho;</mi>
+                                    </msup>
+                                </mrow>
+                            <mo> ) </mo>
+                        </mrow>
+                        <mfrac>
+                            <mn>1</mn>
+                            <mi>&rho;</mi>
+                        </mfrac>
+                    </msup>
+    </math>
+</p>
+<p>
+    For 
+        <math>
+            <mi>&rho;</mi>
+            <mo>=</mo>
+            <mn>0</mn>
+        </math>
+    the limit of the CES utility function is the Cobb-Douglas function:
+    <math>
+        <mi>U</mi>        
+        <mo>&ApplyFunction;</mo>
+            <mrow>
+                <mo>(</mo>
+                    <mrow>
+                      <mi> x </mi>
+                      <mo> , </mo>
+                      <mi> y </mi>
+                    </mrow>
+                <mo> ) </mo>
+            </mrow>
+                <mo>=</mo>
+                <msup>
+                    <mi>x</mi>
+                    <mi>a</mi>
+                </msup>
+                <mo>&InvisibleTimes;</mo>
+                <msup>
+                    <mi>y</mi>
+                    <mrow>
+                        <mn>1</mn>
+                        <mo>-</mo>
+                        <mi>a</mi>
+                    </mrow>
+                </msup>
+    </math>
+</p>
+<p>
+The consumer chooses the quantities of 
+    <math>
+        <mi>x</mi>
+    </math> 
+and
+    <math>
+        <mi>x</mi>
+    </math>
+that maximize
+    <math>
+        <mi>U</mi>        
+        <mo>&ApplyFunction;</mo>
+            <mrow>
+                <mo>(</mo>
+                    <mrow>
+                      <mi> x </mi>
+                      <mo> , </mo>
+                      <mi> y </mi>
+                    </mrow>
+                <mo> ) </mo>
+            </mrow>
+    </math>
+subject to the budget constraint
+</p>
+<p>
+    <math>
+        <msub>
+            <mi>p</mi>
+            <mi>x</mi>
+        </msub>
+        <mo>&InvisibleTimes;</mo>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msub>
+            <mi>p</mi>
+            <mi>x</mi>
+        </msub>
+        <mo>&InvisibleTimes;</mo>
+        <mi>y</mi>
+        <mo>=</mo>
+        <mi>m</mi>
+    </math>
+</p>
+<p>
+    where 
+    <math>
+        <msub>
+            <mi>p</mi>
+            <mi>x</mi>
+        </msub>
+    </math>
+    and
+    <math>
+        <msub>
+            <mi>p</mi>
+            <mi>y</mi>
+        </msub>
+    </math>
+    are the prices of goods X and Y,
+    <math><mi>x</mi></math> and <math><mi>y</mi></math> are the quantities
+    purchased of each, and <math><mi>m</mi></math> is the consumer's income.
+</p>
+<p>
+Be aware that the tool may be slow for certain combinations of parameters.
+</p>
+<form action="/" method="POST">
+<input type="text" id="a" name="a" maxlength="5" autocomplete="off">
+<label for="a">
+    Parameter 
+        <math>
+            <mi>a</mi>
+        </math>
+</label>
+<br>
+<input type="text" id="p" name="p" maxlength="5" autocomplete="off">
+<label for="p">
+    Parameter 
+        <math>
+            <mi>&rho;</mi>
+        </math>
+</label>
+<br>
+<input type="text" id="px" name="px" maxlength="5" autocomplete="off">
+<label for="px">
+    Parameter 
+        <math>
+            <msub>
+                <mi>p</mi>
+                <mi>x</mi>
+            </msub>
+        </math>
+</label>
+<br>
+<input type="text" id="py" name="py" maxlength="5" autocomplete="off">
+<label for="py">
+    Parameter 
+        <math>
+            <msub>
+                <mi>p</mi>
+                <mi>y</mi>
+            </msub>
+        </math>
+</label>
+<br>
+<input type="text" id="m" name="m" maxlength="5" autocomplete="off">
+<label for="m">
+    Parameter 
+    <math>
+        <mi>m</mi>
+    </math>
+</label>
+<br>
+<button type="submit">Submit</button>
+</form>
+<br>
+{{input_ | safe}}
+<br>
+{{solution | safe}}
+<br>
+{{img | safe}}
+</html>
