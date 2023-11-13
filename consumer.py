@@ -2,9 +2,9 @@ from matplotlib.figure import Figure
 import numpy as np
 
 from sympy import (
-    Function, 
-    simplify, 
-    solve, 
+    Function,
+    simplify,
+    solve,
     symbols,
     )
 
@@ -12,14 +12,14 @@ x, y = symbols('x y')
 
 class CES(Function):
     @classmethod
-    def eval(cls, 
-             x: float, 
-             y: float, 
-             a: float, 
+    def eval(cls,
+             x: float,
+             y: float,
+             a: float,
              p: float,
              ) -> float:
         """
-        
+
 
         Parameters
         ----------
@@ -54,15 +54,15 @@ class CES(Function):
             return (a*x**p + (1-a)*y**p)**(1/p)
 
 class ConsumerProblem:
-    def __init__(self, 
-                 a: float, 
-                 p: float, 
-                 px: float, 
-                 py: float, 
+    def __init__(self,
+                 a: float,
+                 p: float,
+                 px: float,
+                 py: float,
                  m: float,
                  ) -> None:
         """
-        
+
 
         Parameters
         ----------
@@ -97,12 +97,12 @@ class ConsumerProblem:
         self.p = p
         self.px = px
         self.py = py
-        self.m = m        
+        self.m = m
         self.f = CES.eval(x, y, self.a, self.p)
-    
+
     def utility(self, x: float, y: float) -> float:
         """
-        
+
 
         Parameters
         ----------
@@ -121,7 +121,7 @@ class ConsumerProblem:
 
     def indiff_curve(self, x: np.ndarray, c: float) -> np.ndarray:
         """
-        
+
 
         Parameters
         ----------
@@ -140,13 +140,13 @@ class ConsumerProblem:
         if self.p == 0:
             return (c*x**(-self.a))**(1/(1-self.a))
         base = (c**self.p - self.a*x**self.p)/(1-self.a)
-        return np.piecewise(base, 
-                            [base<=0, base>0], 
+        return np.piecewise(base,
+                            [base<=0, base>0],
                             [None, lambda base: base**(1/self.p)])
-    
+
     def budget_cons(self, x: np.ndarray) -> np.ndarray:
         """
-        
+
 
         Parameters
         ----------
@@ -160,10 +160,10 @@ class ConsumerProblem:
 
         """
         return (self.m - self.px * x) / self.py
-    
+
     def tangency(self) -> dict:
         """
-        
+
 
         Returns
         -------
@@ -172,14 +172,14 @@ class ConsumerProblem:
             for this consumer problem.
 
         """
-        return solve([simplify(self.f.diff(x)/self.f.diff(y)) 
+        return solve([simplify(self.f.diff(x)/self.f.diff(y))
                       - self.px/self.py, self.px*x + self.py*y - self.m
                       ],
                      (x, y), dict=True)[0]
-    
+
     def plot(self) -> Figure:
         """
-        
+
 
         Returns
         -------
@@ -193,14 +193,14 @@ class ConsumerProblem:
         lim_y = 1.1 * self.budget_cons(0)
         x_intercept = solve((self.m - self.px * x) / self.py, x)[0]
         lim_x = 1.1 * x_intercept
-        lim = max(float(lim_y), float(lim_x))        
+        lim = max(float(lim_y), float(lim_x))
         optimal_bundle = self.tangency()
         x_opt, y_opt = float(optimal_bundle[x]), float(optimal_bundle[y])
         opt_util = self.utility(x=x_opt, y=y_opt)
         c_list = [
-            (1/3)*opt_util, 
-            (2/3)*opt_util, 
-            opt_util, 
+            (1/3)*opt_util,
+            (2/3)*opt_util,
+            opt_util,
             (4/3)*opt_util,
             (5/3)*opt_util,
             ]
