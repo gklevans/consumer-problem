@@ -169,23 +169,42 @@ subject to the budget constraint
 Be aware that the tool may be slow for certain combinations of parameters.
 </p>
 <form action="/" method="POST">
-<input type="text" id="a" name="a" maxlength="5" autocomplete="off">
+<input type="text" id="a" name="a" maxlength="5" size="5" autocomplete="off"
+       style="padding: 2px;">
 <label for="a">
     Parameter
         <math>
             <mi>a</mi>
         </math>
+    (where
+        <math>
+            <mn>0</mn>
+            <mo>&lt;</mo>
+            <mi>a</mi>
+            <mo>&lt;</mo>
+            <mn>1</mn>
+        </math>
+    )
 </label>
 <br>
-<input type="text" id="p" name="p" maxlength="5" autocomplete="off">
+<input type="text" id="p" name="p" maxlength="5" size="5" autocomplete="off"
+       style="padding: 2px;">
 <label for="p">
     Parameter
         <math>
             <mi>&rho;</mi>
         </math>
+    (where
+        <math>
+            <mi>&rho;</mi>
+            <mo>&le;</mo>
+            <mn>1</mn>
+        </math>
+    )
 </label>
 <br>
-<input type="text" id="px" name="px" maxlength="5" autocomplete="off">
+<input type="text" id="px" name="px" maxlength="5" size="5" autocomplete="off"
+       style="padding: 2px;">
 <label for="px">
     Parameter
         <math>
@@ -194,9 +213,20 @@ Be aware that the tool may be slow for certain combinations of parameters.
                 <mi>x</mi>
             </msub>
         </math>
+    (where
+        <math>
+            <msub>
+                <mi>p</mi>
+                <mi>x</mi>
+            </msub>
+            <mo>&gt;</mo>
+            <mn>0</mn>
+        </math>
+    )
 </label>
 <br>
-<input type="text" id="py" name="py" maxlength="5" autocomplete="off">
+<input type="text" id="py" name="py" maxlength="5" size="5" autocomplete="off"
+       style="padding: 2px;">
 <label for="py">
     Parameter
         <math>
@@ -205,14 +235,32 @@ Be aware that the tool may be slow for certain combinations of parameters.
                 <mi>y</mi>
             </msub>
         </math>
+    (where
+        <math>
+            <msub>
+                <mi>p</mi>
+                <mi>x</mi>
+            </msub>
+            <mo>&gt;</mo>
+            <mn>0</mn>
+        </math>
+    )
 </label>
 <br>
-<input type="text" id="m" name="m" maxlength="5" autocomplete="off">
+<input type="text" id="m" name="m" maxlength="5" size="5" autocomplete="off"
+       style="padding: 2px;">
 <label for="m">
     Parameter
     <math>
         <mi>m</mi>
     </math>
+    (where
+        <math>
+            <mi>m</mi>
+            <mo>&gt;</mo>
+            <mn>0</mn>
+        </math>
+    )
 </label>
 <br>
 <button type="submit">Submit</button>
