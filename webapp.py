@@ -113,7 +113,6 @@ def solver() -> str:
 
     except ValueError as e:
         solution = convert_to_mathml(str(e))
-
         return render_template('solver.html',
                                input_=input_,
                                solution=solution,
