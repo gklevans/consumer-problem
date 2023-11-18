@@ -206,7 +206,15 @@ class ConsumerProblem:
             ]
         x_vals = np.linspace(1e-10, lim, 1_000)
         fig = Figure()
-        ax = fig.add_axes(rect=(0.1,0.1,0.8,0.8), xlim=(0, lim), ylim=(0, lim))
+        fig.suptitle("Consumer Problem with CES Utility")
+        ax = fig.add_axes(
+            rect=(0.1, 0.1, 0.8, 0.8), 
+            xlim=(0, lim), 
+            ylim=(0, lim),
+            xlabel="Quantity of Good X",
+            ylabel="Quantity of Good Y",
+            )
+        
         for c in c_list:
             ax.plot(x_vals, self.indiff_curve(x_vals, c), color='orange')
         ax.plot(x_vals, self.budget_cons(x_vals), color='blue')
