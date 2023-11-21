@@ -140,6 +140,7 @@ class ConsumerProblem:
         if self.p == 0:
             return (c*x**(-self.a))**(1/(1-self.a))
         base = (c**self.p - self.a*x**self.p)/(1-self.a)
+        
         return np.piecewise(base,
                             [base<=0, base>0],
                             [None, lambda base: base**(1/self.p)])
@@ -160,6 +161,21 @@ class ConsumerProblem:
 
         """
         return (self.m - self.px * x) / self.py
+    
+    def budget_cons_intercepts(self) -> tuple[float]:
+        """
+        
+
+        Returns
+        -------
+        tuple[float]
+            The x- and y-intercepts of the budget constraint.
+
+        """
+        x_intercept = solve((self.m - self.px * x) / self.py, x)[0]
+        y_intercept = self.budget_cons(0)
+        
+        return x_intercept, y_intercept
 
     def tangency(self) -> dict:
         """
@@ -172,10 +188,26 @@ class ConsumerProblem:
             for this consumer problem.
 
         """
-        return solve([simplify(self.f.diff(x)/self.f.diff(y))
-                      - self.px/self.py, self.px*x + self.py*y - self.m
-                      ],
-                     (x, y), dict=True)[0]
+        try:
+            optimal_bundle = solve([simplify(self.f.diff(x)/self.f.diff(y))
+                                    - self.px/self.py, 
+                                    self.px*x + self.py*y - self.m
+                                    ],
+                                   (x, y), dict=True)[0]
+        except IndexError:
+            #no point of tangency
+            x_intercept, y_intercept = self.budget_cons_intercepts()
+            x_utility = self.utility(x=x_intercept, y=0)
+            y_utility = self.utility(x=0, y=y_intercept)
+            if x_utility > y_utility:
+                optimal_bundle = {x: x_intercept, y: 0}
+            else:
+                optimal_bundle = {x: 0, y: y_intercept}
+   
+        if y not in optimal_bundle:
+            raise NotImplementedError("All points on budget line are optimal.")
+            
+        return optimal_bundle
 
     def plot(self) -> Figure:
         """
@@ -190,12 +222,16 @@ class ConsumerProblem:
             Axes limits are set so that the slope of the budget line is clear.
 
         """
-        lim_y = 1.1 * self.budget_cons(0)
-        x_intercept = solve((self.m - self.px * x) / self.py, x)[0]
-        lim_x = 1.1 * x_intercept
+        x_intercept, y_intercept = self.budget_cons_intercepts()
+        lim_x, lim_y = 1.1 * x_intercept, 1.1 * y_intercept
         lim = max(float(lim_y), float(lim_x))
-        optimal_bundle = self.tangency()
-        x_opt, y_opt = float(optimal_bundle[x]), float(optimal_bundle[y])
+        
+        try:
+            optimal_bundle = self.tangency()
+            x_opt, y_opt = float(optimal_bundle[x]), float(optimal_bundle[y])
+        except NotImplementedError:
+            x_opt, y_opt = x_intercept / 2, y_intercept / 2
+        
         opt_util = self.utility(x=x_opt, y=y_opt)
         c_list = [
             (1/3)*opt_util,
@@ -218,4 +254,5 @@ class ConsumerProblem:
         for c in c_list:
             ax.plot(x_vals, self.indiff_curve(x_vals, c), color='orange')
         ax.plot(x_vals, self.budget_cons(x_vals), color='blue')
+        
         return fig
